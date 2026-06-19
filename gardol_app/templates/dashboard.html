@@ -1,0 +1,814 @@
+<!-- dashboard.html - Main Action Page (Top-up & Contact) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solara | My Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(0,0,0,0.1);
+            box-shadow: 0 2px 20px rgba(255, 140, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #FF8C00;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .logo span {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFD700, #FF8C00, #FF4500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #ffffff;
+            transition: 0.2s;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #FF8C00;
+            border-bottom: 2px solid #FF8C00;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #FF8C00;
+            border-radius: 3px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.2)), url('img/javier-miranda-OiiVv1iiB0A-unsplash.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: scroll;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: opacity 0.2s ease-out;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,140,0,0.2), rgba(0,0,0,0.7));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            padding: 2rem;
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: none;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: #f0f0f0;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, #FF8C00, #FF4500);
+            color: #000000;
+            border: none;
+            padding: 14px 36px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .cta-btn:hover {
+            background: linear-gradient(135deg, #FFA500, #FF6347);
+            transform: scale(1.02);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        /* About Section */
+        .about {
+            background: #0a0a0a;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1.2rem;
+            color: #d0d0d0;
+            font-size: 1rem;
+        }
+
+        .about-stats {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: #111111;
+            padding: 1.5rem;
+            border-radius: 24px;
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+            border: 1px solid #FF8C00;
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .stat-card p {
+            color: #aaaaaa;
+        }
+
+        /* Vision & Mission */
+        .vision-mission {
+            background: #050505;
+        }
+
+        .vm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .vm-card {
+            background: #111111;
+            padding: 2rem;
+            border-radius: 32px;
+            text-align: center;
+            border: 1px solid #FF8C00;
+            transition: 0.2s;
+        }
+
+        .vm-card:hover {
+            border-color: #FFD700;
+            transform: translateY(-5px);
+        }
+
+        .vm-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .vm-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .vm-card p {
+            color: #cccccc;
+        }
+
+        /* Footer */
+        .footer {
+            background: #000000;
+            color: #aaaaaa;
+            padding: 3rem 2rem 1rem;
+            border-top: 1px solid #FF8C00;
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #FF8C00;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: #aaaaaa;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: #FFD700;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #222222;
+            font-size: 0.85rem;
+        }
+
+        /* Login Page */
+        .login-body {
+            background: #000000;
+        }
+
+        .login-section {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1rem;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .login-card {
+            background: #0a0a0a;
+            border-radius: 48px;
+            padding: 2.5rem;
+            border: 1px solid #FF8C00;
+            box-shadow: 0 0 30px rgba(255, 140, 0, 0.1);
+        }
+
+        .login-card h2 {
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .login-card p {
+            margin-bottom: 1.5rem;
+            color: #aaaaaa;
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #333333;
+            border-radius: 60px;
+            font-family: inherit;
+            font-size: 1rem;
+            background: #111111;
+            color: #ffffff;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #FF8C00;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #FF8C00, #FF4500);
+            color: #000000;
+            padding: 12px;
+            border: none;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+
+        .demo-note {
+            text-align: center;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            color: #666666;
+        }
+
+        /* Dashboard Main Page */
+        .dashboard-main {
+            background: #0a0a0a;
+            min-height: calc(100vh - 70px);
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+            border: 1px solid #FF8C00;
+            color: white;
+            padding: 2rem;
+            border-radius: 32px;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-section h1 {
+            font-size: 2rem;
+        }
+
+        .welcome-section h1 span {
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .section-card {
+            background: #111111;
+            border-radius: 28px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #222222;
+        }
+
+        .section-card h2 {
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .section-card p {
+            color: #aaaaaa;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #333333;
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 1rem;
+            background: #0a0a0a;
+            color: #ffffff;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #FF8C00;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .char-counter {
+            text-align: right;
+            font-size: 0.75rem;
+            color: #666666;
+            margin-top: 0.25rem;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #FF8C00, #FF4500);
+            color: #000000;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .action-btn.secondary {
+            background: linear-gradient(135deg, #FFA500, #FF6347);
+        }
+
+        .action-btn:hover {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+
+        .message-area {
+            margin-top: 1.5rem;
+        }
+
+        .success-msg {
+            background: rgba(255, 140, 0, 0.2);
+            color: #FFD700;
+            padding: 1rem;
+            border-radius: 20px;
+            border-left: 4px solid #FF8C00;
+        }
+
+        /* Responsive Media Queries */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem 0;
+            }
+            
+            .nav-links.show {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .about-grid, .vm-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            
+            .section-card {
+                padding: 1.5rem;
+            }
+            
+            .dashboard-container {
+                padding: 1rem;
+            }
+            
+            .container {
+                padding: 2rem 1rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stat-card h3 {
+                font-size: 1.5rem;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+            }
+            
+            .login-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="https://placehold.co/40x40/FF8C00/white?text=S" alt="Solara Logo" class="logo-img">
+                <span>SOLARA</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="{% url 'home' %}">Home</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="dashboard-main">
+        <div class="dashboard-container">
+            <div class="welcome-section">
+                <h1>Welcome, <span id="userNameDisplay">User</span>!</h1>
+                <p>Manage your Solara account, recharge instantly, and reach our support team.</p>
+            </div>
+
+            <section class="topup-section">
+                <div class="section-card">
+                    <h2>💰 Top Up & Recharge</h2>
+                    <p>Recharge your Solara line instantly. Get bonus data on recharges above $10!</p>
+                    <form id="topupForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="topupName">Full Name</label>
+                                <input type="text" id="topupName" placeholder="Enter your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="topupPhone">Phone Number</label>
+                                <input type="tel" id="topupPhone" placeholder="Enter phone number" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="topupAmount">Amount (Naira)</label>
+                            <input type="number" id="topupAmount" placeholder="Minimum ₦100" min="100" step="1" required>
+                        </div>
+                        <button type="submit" class="action-btn">Recharge Now</button>
+                    </form>
+                    <div id="topupMessage" class="message-area"></div>
+                </div>
+            </section>
+
+            <section class="contact-section">
+                <div class="section-card">
+                    <h2>📞 Contact Solara Support</h2>
+                    <p>Facing network issues, billing problems, or need assistance? Reach out to our 24/7 team.</p>
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactName">Full Name</label>
+                                <input type="text" id="contactName" placeholder="Your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPhone">Phone Number</label>
+                                <input type="tel" id="contactPhone" placeholder="Your phone number" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactIssue">Describe Your Problem</label>
+                            <textarea id="contactIssue" rows="4" maxlength="200" placeholder="Please describe your issue in detail (max 200 characters)..." required></textarea>
+                            <div class="char-counter"><span id="charCount">0</span>/200 characters</div>
+                        </div>
+                        <button type="submit" class="action-btn secondary">Send Message</button>
+                    </form>
+                    <div id="contactMessage" class="message-area"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Solara Telecom</h4>
+                <p>Infinite connectivity, stellar service.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#about">About Us</a></li>
+                    <li><a href="index.html#vision-mission">Vision & Mission</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>📞 +234 800 SOLARA</p>
+                <p>✉️ hello@solara.com</p>
+                <p>📍 Lagos, Nigeria</p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <p>📱 Twitter | LinkedIn | Instagram</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Solara Telecommunications. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <!-- Dashboard specific JavaScript (minimal) -->
+    <script>
+        // Get URL parameters from login redirect
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('name');
+        const userPhone = urlParams.get('phone');
+
+        if(userName) {
+            document.getElementById('userNameDisplay').textContent = userName;
+            document.getElementById('topupName').value = userName;
+            document.getElementById('contactName').value = userName;
+        }
+        if(userPhone) {
+            document.getElementById('topupPhone').value = userPhone;
+            document.getElementById('contactPhone').value = userPhone;
+        }
+
+        // Top-up form
+        document.getElementById('topupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('topupName').value;
+            const phone = document.getElementById('topupPhone').value;
+            const amount = document.getElementById('topupAmount').value;
+
+            if(amount < 100) {
+                alert("Minimum top-up amount is ₦100.");
+                return;
+            }
+
+            alert(`✅ Top-up successful! ${name}, you have recharged ₦${amount} to ${phone}.`);
+            document.getElementById('topupAmount').value = '';
+            document.getElementById('topupMessage').innerHTML = '<div class="success-msg">✓ Recharge completed successfully!</div>';
+            setTimeout(() => {
+                document.getElementById('topupMessage').innerHTML = '';
+            }, 3000);
+        });
+
+            // Contact form with character counter
+            const textarea = document.getElementById('contactIssue');
+            const charSpan = document.getElementById('charCount');
+            textarea.addEventListener('input', function() {
+                charSpan.textContent = this.value.length;
+            });
+
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('contactName').value;
+                const phone = document.getElementById('contactPhone').value;
+                const issue = document.getElementById('contactIssue').value;
+
+                if(issue.length > 200) {
+                    alert("Problem description cannot exceed 200 characters.");
+                    return;
+                }
+
+                alert(`📨 Thank you ${name}! Your support request has been submitted. We'll contact you at ${phone} within 2 hours.`);
+                document.getElementById('contactIssue').value = '';
+                charSpan.textContent = '0';
+                document.getElementById('contactMessage').innerHTML = '<div class="success-msg">✓ Message sent to Solara Support!</div>';
+                setTimeout(() => {
+                    document.getElementById('contactMessage').innerHTML = '';
+                }, 3000);
+            });
+            // script.js - Minimal JavaScript (only for navigation and scroll effects)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger menu toggle
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            
+            if(hamburger && navLinks) {
+                hamburger.addEventListener('click', function() {
+                    navLinks.classList.toggle('show');
+                });
+            }
+            
+            // Close mobile menu when clicking a link
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => {
+                link.addEventListener('click', function() {
+                    if(navLinks && navLinks.classList.contains('show')) {
+                        navLinks.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Hero fade on scroll (landing page only)
+            const hero = document.querySelector('.hero');
+            if(hero) {
+                window.addEventListener('scroll', function() {
+                    const scrollPosition = window.scrollY;
+                    const maxFade = 300;
+                    let opacity = Math.max(0.3, 1 - (scrollPosition / maxFade));
+                    hero.style.opacity = opacity;
+                });
+            }
+            
+            // Get Started button functionality (landing page only)
+            const getStartedBtn = document.getElementById('getStartedBtn');
+            if(getStartedBtn) {
+                getStartedBtn.addEventListener('click', function() {
+                    window.location.href = 'login.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
